@@ -27,6 +27,9 @@ namespace ToDoList
 
         private ListBox lstTareas;
 
+        // New: label to show the number of tasks displayed
+        private Label lblContador;
+
         // Constructor
         public Form1()
         {
@@ -162,6 +165,15 @@ namespace ToDoList
             };
             // ListBox will hold Tarea objects; ToString() is used for display.
             this.Controls.Add(lstTareas);
+
+            // Counter label placed under the ListBox
+            lblContador = new Label
+            {
+                Text = "Total tareas: 0",
+                AutoSize = true,
+                Location = new Point(listX, lstTareas.Bottom + 6)
+            };
+            this.Controls.Add(lblContador);
         }
 
         // Event handlers and behavior
@@ -270,7 +282,7 @@ namespace ToDoList
         }
 
         /// <summary>
-        /// Updates the ListBox with the provided tasks.
+        /// Updates the ListBox with the provided tasks and updates the counter label.
         /// </summary>
         /// <param name="tareas">Sequence of Tarea objects to display.</param>
         private void UpdateLista(IEnumerable<Tarea> tareas)
@@ -286,6 +298,10 @@ namespace ToDoList
 
                 // The Tarea.ToString() will be used for display. Clear selection.
                 lstTareas.ClearSelected();
+
+                // Update counter label with how many items are currently displayed
+                int contador = lista.Count;
+                lblContador.Text = $"Total tareas: {contador}";
             }
             catch (Exception ex)
             {
