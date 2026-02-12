@@ -24,6 +24,7 @@ namespace ToDoList
         private Button btnPendientes;
         private Button btnCompletadas;
         private Button btnTodas;
+        private Button btnLimpiar;
 
         private ListBox lstTareas;
 
@@ -154,6 +155,17 @@ namespace ToDoList
             btnTodas.Click += BtnTodas_Click;
             this.Controls.Add(btnTodas);
 
+            // Add "Limpiar" button below the current buttons (usability improvement)
+            int limpiarY = currentY + btnPendientes.Height + 12;
+            btnLimpiar = new Button
+            {
+                Text = "Limpiar",
+                Location = new Point(marginLeft, limpiarY),
+                Size = new Size(110, 32)
+            };
+            btnLimpiar.Click += btnLimpiar_Click;
+            this.Controls.Add(btnLimpiar);
+
             // ListBox on the right side (large)
             int listX = marginLeft + controlWidth + 20; // leave a gap between columns
             int listWidth = this.ClientSize.Width - listX - marginLeft;
@@ -278,6 +290,23 @@ namespace ToDoList
             catch (Exception ex)
             {
                 MessageBox.Show(this, ex.Message, "Error al mostrar todas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Clears input fields and focuses the title textbox.
+        /// </summary>
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                txtTitulo.Clear();
+                txtDescripcion.Clear();
+                txtTitulo.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Error al limpiar campos", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
